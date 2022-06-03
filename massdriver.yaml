@@ -1,66 +1,59 @@
-# This file will be used to generate all of the schema-*.json files in a bundle
 schema: draft-07
-name: "gcp-cloud-function-pubsub"
-description: ""
-ref: github.com/YOUR_NAME_HERE/gcp-cloud-function-pubsub
-access: "public"
-type: "bundle"
+name: gcp-cloud-function-pubsub
+description: "Google Cloud Function that attaches to a PubSub topic."
+ref: github.com/massdriver-cloud/massdriver-bundles
+access: public
+type: bundle
 
 steps:
   - path: src
     provisioner: terraform
 
-# schema-params.json
-# JSON Schema sans-fields above
 params:
   examples:
-    - foo: US-West 2 VPC
-    - foo: US-East 1 VPC
+    - __name: NodeJS No Cold Start
+      cloud_function_configuration:
+        runtime: Node.js 16
+        minimum_instances: 1
+    - __name: Java 17
+      cloud_function_configuration:
+        runtime: Java 17
+        entrypoint: functions.HelloWorld
+        memory_mb: 1024
   required:
-    - foo
+    - cloud_function_configuration
   properties:
-    foo:
-      type: string
-      title: Foo
-      description: Name of gcp-cloud-function-pubsub
-      default: ""
-      examples:
-        - US-West 2 VPC
-        - US-East 1 VPC
+    cloud_function_configuration:
+      $ref: https://raw.githubusercontent.com/massdriver-cloud/artifact-definitions/main/definitions/types/gcp-cloud-function-configuration.json
 
-# schema-connections.json
-# Named list of input connections (artifacts) (map[name]artifact)
 connections:
-  properties: {}
-  # required:
-  # - aws_authentication
-  # - network
-  # properties:
-  #   aws_authentication:
-  #     $ref: massdriver/aws-iam-role
-  #   network:
-  #     $ref: massdriver/aws-regional-cloud
+  required:
+    - subnetwork
+    - gcp_authentication
+    - topic
+  properties:
+    subnetwork:
+      $ref: massdriver/gcp-subnetwork
+    gcp_authentication:
+      $ref: massdriver/gcp-service-account
+    topic:
+      $ref: massdriver/gcp-pubsub-topic
 
-# schema-artifacts.json
-# Named list of output artifacts  (map[name]artifact)
 artifacts:
-  properties: {}
-  # required:
-  #   - network
-  # properties:
-  #   network:
-  #     $ref: massdriver/aws-regional-cloud
+  required:
+    - cloud_function
+  properties:
+    cloud_function:
+      $ref: massdriver/gcp-cloud-function
 
-# schema-ui.json
-# List of form customizations for params-schema
 ui:
   ui:order:
+    - cloud_function_configuration
     - "*"
-  ## set top level ui:wiget
-  # secret_key:
-  #    ui:widget: "password"
-  ## Set key in an array of objects
-  # secrets:
-  #   items:
-  #     mdKeyId:
-  #       ui:widget: "hidden"
+  cloud_function_configuration:
+    ui:order:
+      - runtime
+      - entrypoint
+      - memory_mb
+      - minimum_instances
+      - maximum_instances
