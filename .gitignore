@@ -110,6 +110,8 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/terraform,osx,windows,linux
 
+*.zip
+
 # Massdriver generated files
 schema-artifacts.json
 schema-connections.json
