@@ -1,6 +1,6 @@
 locals {
   data_infrastructure = {
-    grn = google_cloudfunctions_function.main.id
+    name = google_cloudfunctions_function.main.name
   }
   data_security = {
   }
