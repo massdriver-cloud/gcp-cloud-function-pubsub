@@ -1,7 +1,7 @@
 schema: draft-07
 name: gcp-cloud-function-pubsub
 description: "Google Cloud Function that attaches to a PubSub topic."
-ref: github.com/massdriver-cloud/massdriver-bundles
+ref: github.com/massdriver-cloud/gcp-cloud-function-pubsub
 access: public
 type: bundle
 
