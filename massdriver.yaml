@@ -5,10 +5,6 @@ ref: github.com/massdriver-cloud/gcp-cloud-function-pubsub
 access: public
 type: bundle
 
-steps:
-  - path: src
-    provisioner: terraform
-
 params:
   examples:
     - __name: NodeJS No Cold Start
