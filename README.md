@@ -17,7 +17,7 @@ Google Cloud Function that attaches to a PubSub topic.
 
 ## Design
 
-For detailed information, check out our [Operator Guide](operator.mdx) for this bundle.
+For detailed information, check out our [Operator Guide](operator.md) for this bundle.
 
 ## Usage
 
