@@ -3,7 +3,6 @@ name: gcp-cloud-function-pubsub
 version: 1.0.0
 description: Google Cloud Function that attaches to a PubSub topic.
 source_url: https://github.com/massdriver-cloud/gcp-cloud-function-pubsub
-type: application
 params:
   examples:
   - __name: NodeJS No Cold Start
