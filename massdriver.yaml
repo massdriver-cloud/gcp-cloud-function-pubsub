@@ -1,55 +1,56 @@
 schema: draft-07
 name: gcp-cloud-function-pubsub
-description: "Google Cloud Function that attaches to a PubSub topic."
-source_url: github.com/massdriver-cloud/gcp-cloud-function-pubsub
-access: public
-type: bundle
-
+version: 1.0.0
+description: Google Cloud Function that attaches to a PubSub topic.
+source_url: https://github.com/massdriver-cloud/gcp-cloud-function-pubsub
 params:
   examples:
-    - __name: NodeJS No Cold Start
-      cloud_function_configuration:
-        runtime: Node.js 16
-        minimum_instances: 1
-    - __name: Java 17
-      cloud_function_configuration:
-        runtime: Java 17
-        entrypoint: functions.HelloWorld
-        memory_mb: 1024
+  - __name: NodeJS No Cold Start
+    cloud_function_configuration:
+      runtime: Node.js 16
+      minimum_instances: 1
+  - __name: Java 17
+    cloud_function_configuration:
+      runtime: Java 17
+      entrypoint: functions.HelloWorld
+      memory_mb: 1024
   required:
-    - cloud_function_configuration
+  - cloud_function_configuration
   properties:
     cloud_function_configuration:
-      $ref: https://raw.githubusercontent.com/massdriver-cloud/artifact-definitions/main/definitions/types/gcp-cloud-function-configuration.json
-
+      "$ref": https://raw.githubusercontent.com/massdriver-cloud/artifact-definitions/main/definitions/types/gcp-cloud-function-configuration.json
 connections:
   required:
-    - subnetwork
-    - gcp_authentication
-    - topic
+  - subnetwork
+  - gcp_authentication
+  - topic
   properties:
     subnetwork:
-      $ref: massdriver/gcp-subnetwork
+      "$ref": massdriver/gcp-subnetwork
     gcp_authentication:
-      $ref: massdriver/gcp-service-account
+      "$ref": massdriver/gcp-service-account
     topic:
-      $ref: massdriver/gcp-pubsub-topic
-
+      "$ref": massdriver/gcp-pubsub-topic
 artifacts:
   required:
-    - cloud_function
+  - cloud_function
   properties:
     cloud_function:
-      $ref: massdriver/gcp-cloud-function
-
+      "$ref": massdriver/gcp-cloud-function
 ui:
   ui:order:
-    - cloud_function_configuration
-    - "*"
+  - cloud_function_configuration
+  - "*"
   cloud_function_configuration:
     ui:order:
-      - runtime
-      - entrypoint
-      - memory_mb
-      - minimum_instances
-      - maximum_instances
+    - runtime
+    - entrypoint
+    - memory_mb
+    - minimum_instances
+    - maximum_instances
+steps:
+- path: src
+  provisioner: opentofu
+  config:
+    checkov:
+      enable: true
